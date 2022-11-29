@@ -157,7 +157,7 @@ public class PermissionServiceImpl implements PermissionService {
     public PageableResponse<GetPermissionResponse> getPermissionByCondition(GetPermissionRequest request) {
         Query query = new Query();
         if(Objects.nonNull(request.getPermissionId())){
-            query.addCriteria(Criteria.where("_id").regex(request.getPermissionId()));
+            query.addCriteria(Criteria.where("_id").is(request.getPermissionId()));
         }
         if(Objects.nonNull(request.getPermissionName())){
             query.addCriteria(Criteria.where("permission_name").regex(request.getPermissionName()));

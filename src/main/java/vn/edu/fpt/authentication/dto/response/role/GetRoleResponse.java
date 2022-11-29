@@ -1,5 +1,6 @@
 package vn.edu.fpt.authentication.dto.response.role;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import vn.edu.fpt.authentication.dto.common.AuditableResponse;
@@ -22,6 +23,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
+@JsonPropertyOrder({"roleId", "roleName", "description", "isEnable", "status", "permissions"})
 public class GetRoleResponse extends AuditableResponse implements Serializable {
 
     private static final long serialVersionUID = 1509654297902859049L;
@@ -29,6 +31,5 @@ public class GetRoleResponse extends AuditableResponse implements Serializable {
     private String roleName;
     private String description;
     private Boolean isEnable;
-    private String status;
     private List<GetPermissionResponse> permissions;
 }

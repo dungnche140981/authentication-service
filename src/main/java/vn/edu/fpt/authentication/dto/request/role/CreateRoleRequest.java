@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
@@ -21,6 +24,9 @@ import java.io.Serializable;
 public class CreateRoleRequest implements Serializable {
 
     private static final long serialVersionUID = -7342949210860406239L;
+    @NotNull
+    @NotEmpty
+    @Pattern(regexp = "^[a-zA-Z0-9_]{3,20}$")
     private String roleName;
     private String description;
 }

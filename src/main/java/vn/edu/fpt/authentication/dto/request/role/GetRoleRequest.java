@@ -29,7 +29,7 @@ public class GetRoleRequest extends AuditableRequest {
     private Boolean isEnable;
 
     public String getRoleId() {
-        return RequestDataUtils.convertSearchableData(roleId);
+        return roleId;
     }
 
     public String getRoleName() {

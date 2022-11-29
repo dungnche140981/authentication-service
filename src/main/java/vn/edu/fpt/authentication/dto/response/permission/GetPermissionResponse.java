@@ -1,5 +1,6 @@
 package vn.edu.fpt.authentication.dto.response.permission;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import vn.edu.fpt.authentication.dto.common.AuditableResponse;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
+@JsonPropertyOrder({"permissionId", "permissionName", "isEnable", "description"})
 public class GetPermissionResponse extends AuditableResponse implements Serializable {
 
     private static final long serialVersionUID = -2983397104975710917L;

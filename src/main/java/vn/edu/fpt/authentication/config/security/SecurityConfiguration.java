@@ -16,9 +16,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import vn.edu.fpt.authentication.filter.JwtFilter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -56,6 +64,8 @@ public class SecurityConfiguration {
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
         http
                 .csrf().disable()
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .authorizeHttpRequests((authz) -> authz
                         .anyRequest().authenticated())
                 .authenticationManager(authenticationManager)
@@ -77,13 +87,13 @@ public class SecurityConfiguration {
                 .antMatchers("/"+applicationContext+"/public/api/v1/accounts/{id}/password/reset");
     }
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedMethods("*");
-            }
-        };
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("*"));
+        configuration.addAllowedHeader("*");
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "DELETE", "PUT"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

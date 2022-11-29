@@ -1,5 +1,6 @@
 package vn.edu.fpt.authentication.dto.common;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @SuperBuilder
+@JsonPropertyOrder({"createdBy", "createdByInfo", "createdDate", "lastModifiedBy", "lastModifiedByInfo", "lastModifiedDate"})
 public abstract class AuditableResponse implements Serializable {
 
     private static final long serialVersionUID = -8406677523279755332L;

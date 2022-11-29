@@ -291,7 +291,7 @@ public class AccountServiceImpl implements AccountService {
     public PageableResponse<GetAccountResponse> getAccountByCondition(GetAccountRequest request) {
         Query query = new Query();
         if (Objects.nonNull(request.getAccountId())) {
-            query.addCriteria(Criteria.where("_id").regex(request.getAccountId()));
+            query.addCriteria(Criteria.where("_id").is(request.getAccountId()));
         }
 
         if (Objects.nonNull(request.getEmail())) {
@@ -322,8 +322,8 @@ public class AccountServiceImpl implements AccountService {
             query.addCriteria(Criteria.where("is_enable").is(request.getEnable()));
         }
 
-//        query.addCriteria(Criteria.where("created_date").gte(request.getCreatedDateFrom()).lte(request.getCreatedDateTo()));
-//        query.addCriteria(Criteria.where("last_modified_date").gte(request.getLastModifiedDateFrom()).lte(request.getLastModifiedDateTo()));
+        query.addCriteria(Criteria.where("created_date").gte(request.getCreatedDateFrom()).lte(request.getCreatedDateTo()));
+        query.addCriteria(Criteria.where("last_modified_date").gte(request.getLastModifiedDateFrom()).lte(request.getLastModifiedDateTo()));
 
         Long totalElements = mongoTemplate.count(query, Account.class);
 

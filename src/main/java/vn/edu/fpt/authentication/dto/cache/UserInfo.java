@@ -1,5 +1,6 @@
 package vn.edu.fpt.authentication.dto.cache;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
+@JsonPropertyOrder({"username", "email", "fullName", "roles"})
 public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 4689073615796931874L;

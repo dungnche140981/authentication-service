@@ -39,7 +39,7 @@ public class GetAccountRequest extends PageableRequest {
     private String lastModifiedDateTo;
 
     public String getAccountId() {
-        return RequestDataUtils.convertSearchableData(accountId);
+        return accountId;
     }
 
     public String getUsername() {

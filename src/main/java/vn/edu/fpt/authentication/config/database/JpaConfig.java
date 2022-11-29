@@ -32,6 +32,6 @@ public class JpaConfig {
 
     @Bean
     public DateTimeProvider utcDateTimeProvider() {
-        return () -> Optional.of(LocalDateTime.now(ZoneOffset.ofHours(13)));
+        return () -> Optional.of(LocalDateTime.now());
     }
 }

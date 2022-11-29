@@ -1,6 +1,7 @@
 package vn.edu.fpt.authentication.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.authentication.dto.common.GeneralResponse;
 import vn.edu.fpt.authentication.dto.common.PageableResponse;
@@ -21,7 +22,7 @@ import vn.edu.fpt.authentication.dto.response.role.GetRoleResponse;
 public interface RoleController {
 
     @PostMapping("/role")
-    ResponseEntity<GeneralResponse<CreateRoleResponse>> createRole(@RequestBody CreateRoleRequest request);
+    ResponseEntity<GeneralResponse<CreateRoleResponse>> createRole(@Validated @RequestBody CreateRoleRequest request);
 
     @PutMapping("/{role-id}")
     ResponseEntity<GeneralResponse<Object>> updateRole(

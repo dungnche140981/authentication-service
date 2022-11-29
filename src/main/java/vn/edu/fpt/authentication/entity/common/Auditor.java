@@ -33,19 +33,18 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
-public abstract class Auditor implements Serializable {
+public abstract class Auditor {
 
-    private static final long serialVersionUID = -1270165536077836250L;
-    @Field(name = "created_by", targetType = FieldType.OBJECT_ID)
+    @Field(name = "created_by")
     @CreatedBy
     private String createdBy;
-    @Field(name = "created_date")
+    @Field(name = "created_date", targetType = FieldType.DATE_TIME)
     @CreatedDate
     private LocalDateTime createdDate;
-    @Field(name = "last_modified_by", targetType = FieldType.OBJECT_ID)
+    @Field(name = "last_modified_by")
     @LastModifiedBy
     private String lastModifiedBy;
-    @Field(name = "last_modified_date")
+    @Field(name = "last_modified_date", targetType = FieldType.DATE_TIME)
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 }

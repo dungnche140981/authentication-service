@@ -31,7 +31,7 @@ public class GetPermissionRequest extends AuditableRequest implements Serializab
     private Boolean isEnable;
 
     public String getPermissionId() {
-        return RequestDataUtils.convertSearchableData(permissionId);
+        return permissionId;
     }
 
     public String getPermissionName() {

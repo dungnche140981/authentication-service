@@ -106,9 +106,13 @@ public class RoleServiceImpl implements RoleService {
         if (roleOptional.isPresent()) {
             throw new BusinessException(ResponseStatusEnum.BAD_REQUEST, "Role name already exist in database");
         }
+        _Permission permission = permissionRepository.findByPermissionName("readProject")
+                .orElseThrow(() -> new BusinessException("Missing default permission: readProject"));
+
         _Role role = _Role.builder()
                 .roleName(request.getRoleName())
                 .description(request.getDescription())
+                .permissions(List.of(permission))
                 .build();
 
         try {
@@ -188,7 +192,7 @@ public class RoleServiceImpl implements RoleService {
     public PageableResponse<GetRoleResponse> getRoleByCondition(GetRoleRequest request) {
         Query query = new Query();
         if (Objects.nonNull(request.getRoleId())) {
-            query.addCriteria(Criteria.where("_id").regex(request.getRoleId()));
+            query.addCriteria(Criteria.where("_id").is(request.getRoleId()));
         }
         if (Objects.nonNull(request.getRoleName())) {
             query.addCriteria(Criteria.where("role_name").regex(request.getRoleName()));
@@ -239,6 +243,7 @@ public class RoleServiceImpl implements RoleService {
         return GetRoleResponse.builder()
                 .roleId(role.getRoleId())
                 .roleName(role.getRoleName())
+                .isEnable(role.getIsEnable())
                 .description(role.getDescription())
                 .permissions(role.getPermissions().stream().map(permissionService::convertToPermissionResponse).collect(Collectors.toList()))
                 .createdBy(role.getCreatedBy())
