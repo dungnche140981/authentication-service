@@ -137,6 +137,13 @@ public class AccountServiceImpl implements AccountService {
         _Role defaultRole = roleRepository.findByRoleName("USER")
                 .orElseThrow(() -> new BusinessException("Role USER not found in database"));
 
+        if(accountRepository.findAccountByUsername(request.getUsername()).isPresent()){
+            throw new BusinessException(ResponseStatusEnum.BAD_REQUEST, "Username already exist");
+        }
+        if(accountRepository.findAccountByEmail(request.getEmail()).isPresent()){
+            throw new BusinessException(ResponseStatusEnum.BAD_REQUEST, "Email already exist");
+        }
+
         Account account = Account.builder()
                 .fullName(request.getFullName())
                 .username(request.getUsername())
@@ -201,8 +208,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void resetPassword(String id) {
-        Account account = accountRepository.findById(id)
+    public void resetPassword(ResetPasswordRequest request) {
+        Account account = accountRepository.findAccountByEmailOrUsername(request.getEmailOrUsername())
                 .orElseThrow(() -> new BusinessException(ResponseStatusEnum.BAD_REQUEST, "Account not found"));
         String newPassword = randomPassword();
         account.setPassword(passwordEncoder.encode(newPassword));
@@ -219,7 +226,7 @@ public class AccountServiceImpl implements AccountService {
 
         try {
             accountRepository.save(account);
-            log.info("Reset password success: {}", id);
+            log.info("Reset password success");
         } catch (Exception ex) {
             throw new BusinessException("Can't reset password account to database: " + ex.getMessage());
         }

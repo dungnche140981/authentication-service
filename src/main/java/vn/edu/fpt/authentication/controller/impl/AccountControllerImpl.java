@@ -119,8 +119,8 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @Override
-    public ResponseEntity<GeneralResponse<Object>> resetPassword(String id) {
-        accountService.resetPassword(id);
+    public ResponseEntity<GeneralResponse<Object>> resetPassword(ResetPasswordRequest request) {
+        accountService.resetPassword(request);
         return responseFactory.response(ResponseStatusEnum.SUCCESS);
     }
 

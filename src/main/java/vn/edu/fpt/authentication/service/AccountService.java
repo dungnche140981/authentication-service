@@ -31,7 +31,7 @@ public interface AccountService {
 
     LoginResponse refreshToken(RefreshTokenRequest request);
 
-    void resetPassword(String id);
+    void resetPassword(ResetPasswordRequest request);
 
     void addRoleToAccount(String id, AddRoleToAccountRequest request);
 

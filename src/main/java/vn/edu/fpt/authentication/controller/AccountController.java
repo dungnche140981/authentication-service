@@ -61,8 +61,8 @@ public interface AccountController {
             @RequestBody ChangeEmailRequest request);
 
 
-    @PostMapping("/{id}/password/reset")
-    ResponseEntity<GeneralResponse<Object>> resetPassword(@PathVariable("id") String id);
+    @PostMapping("/password/reset")
+    ResponseEntity<GeneralResponse<Object>> resetPassword(@RequestBody ResetPasswordRequest request);
 
     @DeleteMapping("/{id}")
     @IsAdmin
