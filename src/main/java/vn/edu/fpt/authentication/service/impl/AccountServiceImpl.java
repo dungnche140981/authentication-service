@@ -183,6 +183,7 @@ public class AccountServiceImpl implements AccountService {
         String refreshToken = tokenService.generateRefreshToken(request);
 
         return LoginResponse.builder()
+                .accountId(account.getAccountId())
                 .username(account.getUsername())
                 .fullName(account.getFullName())
                 .email(account.getEmail())

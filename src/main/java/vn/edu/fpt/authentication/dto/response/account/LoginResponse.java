@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 public class LoginResponse implements Serializable {
 
     private static final long serialVersionUID = 8619678507118001064L;
+    private String accountId;
     private String username;
     private String email;
     private String fullName;
