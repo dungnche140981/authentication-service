@@ -83,7 +83,7 @@ public class SecurityConfiguration {
         return (web) -> web
                 .ignoring()
                 .antMatchers("/"+applicationContext+"/actuator/health")
-                .antMatchers(HttpMethod.POST,"/"+applicationContext+"/public/api/v1/accounts/account/account")
+                .antMatchers(HttpMethod.POST,"/"+applicationContext+"/public/api/v1/accounts/account")
                 .antMatchers("/"+applicationContext+"/public/api/v1/accounts/account/login")
                 .antMatchers("/"+applicationContext+"/public/api/v1/accounts/token/refresh")
                 .antMatchers("/"+applicationContext+"/public/api/v1/accounts/{id}/password/reset");
