@@ -12,10 +12,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import vn.edu.fpt.authentication.config.kafka.producer.CreateAccountActivityProducer;
 import vn.edu.fpt.authentication.config.kafka.producer.SendEmailProducer;
 import vn.edu.fpt.authentication.constant.ResponseStatusEnum;
 import vn.edu.fpt.authentication.dto.cache.UserInfo;
 import vn.edu.fpt.authentication.dto.common.PageableResponse;
+import vn.edu.fpt.authentication.dto.event.CreateAccountActivityEvent;
 import vn.edu.fpt.authentication.dto.event.SendEmailEvent;
 import vn.edu.fpt.authentication.dto.request.account.*;
 import vn.edu.fpt.authentication.dto.response.account.CreateAccountResponse;
@@ -58,6 +60,7 @@ public class AccountServiceImpl implements AccountService {
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;
     private final SendEmailProducer sendEmailProducer;
+    private final CreateAccountActivityProducer createAccountActivityProducer;
     private final MongoTemplate mongoTemplate;
     private final RoleService roleService;
 
@@ -152,8 +155,6 @@ public class AccountServiceImpl implements AccountService {
                 .roles(List.of(defaultRole))
                 .build();
 
-        pushAccountInfo(account);
-
         try {
             account = accountRepository.save(account);
             log.info("Create account success with email: {} and account id is: {}", account.getEmail(), account.getAccountId());
@@ -161,9 +162,19 @@ public class AccountServiceImpl implements AccountService {
             throw new BusinessException("Can't create account in database: " + ex.getMessage());
         }
 
+        pushAccountInfo(account);
+        createForumAccountActivity(account);
+
         return CreateAccountResponse.builder()
                 .accountId(account.getAccountId())
                 .build();
+    }
+
+    private void createForumAccountActivity(Account account) {
+        CreateAccountActivityEvent createAccountActivityEvent = CreateAccountActivityEvent.builder()
+                .accountId(account.getAccountId())
+                .build();
+        createAccountActivityProducer.sendMessage(createAccountActivityEvent);
     }
 
     @Override

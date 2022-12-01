@@ -84,9 +84,9 @@ public class SecurityConfiguration {
                 .ignoring()
                 .antMatchers("/"+applicationContext+"/actuator/health")
                 .antMatchers(HttpMethod.POST,"/"+applicationContext+"/public/api/v1/accounts/account")
-                .antMatchers("/"+applicationContext+"/public/api/v1/accounts/account/login")
-                .antMatchers("/"+applicationContext+"/public/api/v1/accounts/token/refresh")
-                .antMatchers("/"+applicationContext+"/public/api/v1/accounts/{id}/password/reset");
+                .antMatchers(HttpMethod.POST, "/"+applicationContext+"/public/api/v1/accounts/account/login")
+                .antMatchers(HttpMethod.POST,"/"+applicationContext+"/public/api/v1/accounts/token/refresh")
+                .antMatchers(HttpMethod.POST, "/"+applicationContext+"/public/api/v1/accounts/password/reset");
     }
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
