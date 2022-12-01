@@ -23,7 +23,7 @@ import java.util.UUID;
 @Slf4j
 public class SendEmailProducer extends Producer{
 
-    private static final String TOPIC = "flab.send_email";
+    private static final String TOPIC = "flab.notification.send_email";
     private ObjectMapper objectMapper;
 
     @Autowired
