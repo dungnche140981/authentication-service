@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import vn.edu.fpt.authentication.config.kafka.producer.CreateAccountActivityProducer;
 import vn.edu.fpt.authentication.config.kafka.producer.SendEmailProducer;
 import vn.edu.fpt.authentication.constant.ResponseStatusEnum;
@@ -77,7 +78,8 @@ public class AccountServiceImpl implements AccountService {
                     .roles(List.of(adminRole))
                     .build();
             try {
-                accountRepository.save(account);
+                account = accountRepository.save(account);
+                pushAccountInfo(account);
                 log.info("Init account success");
             } catch (Exception ex) {
                 throw new BusinessException("Can't init account in database: " + ex.getMessage());
@@ -135,6 +137,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public CreateAccountResponse createAccount(CreateAccountRequest request) {
 
         _Role defaultRole = roleRepository.findByRoleName("USER")
@@ -259,11 +262,10 @@ public class AccountServiceImpl implements AccountService {
         roles.add(role);
         account.setRoles(roles);
 
-        pushAccountInfo(account);
-
         try {
             accountRepository.save(account);
             log.info("Add role to account success");
+            pushAccountInfo(account);
         } catch (Exception ex) {
             throw new BusinessException("Can't save account update role to database");
         }
@@ -436,7 +438,7 @@ public class AccountServiceImpl implements AccountService {
     private void removeAccountInfo(Account account) {
         try {
             Boolean result = redisTemplate.delete(String.format("userinfo:%s", account.getAccountId()));
-            if (result) {
+            if (Boolean.TRUE.equals(result)) {
                 log.info("remove account info success");
             } else {
                 log.info("account info has been deleted");
