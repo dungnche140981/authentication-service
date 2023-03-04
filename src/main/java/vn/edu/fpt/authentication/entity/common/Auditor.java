@@ -34,7 +34,6 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditor {
-
     @Field(name = "created_by")
     @CreatedBy
     private String createdBy;

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 
 /**
@@ -16,8 +15,7 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
  * @created : 25/10/2022 - 03:39
  * @contact : 0834481768 - hoang.harley.work@gmail.com
  **/
-@Configuration
-public class RedisConfig {
+public class Config {
 
     @Value("${spring.redis.host}")
     private String hostname;

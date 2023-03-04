@@ -37,7 +37,8 @@ public class AccountControllerImpl implements AccountController {
     private final ResponseFactory responseFactory;
 
     @Override
-    @IsViewer
+
+
     public ResponseEntity<GeneralResponse<CreateAccountResponse>> createAccount(CreateAccountRequest request) {
         return responseFactory.response(accountService.createAccount(request), ResponseStatusEnum.CREATED);
     }

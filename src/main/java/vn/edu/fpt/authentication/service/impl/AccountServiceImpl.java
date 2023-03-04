@@ -71,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
             _Role adminRole = roleRepository.findByRoleName("ADMIN")
                     .orElseThrow(() -> new BusinessException("Role ADMIN not exist"));
             Account account = Account.builder()
-                    .email("admin.flab@gmail.com")
+                    .email("admin.horo@gmail.com")
                     .username("admin")
                     .fullName("admin")
                     .password(passwordEncoder.encode(randomPassword()))

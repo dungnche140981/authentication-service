@@ -40,10 +40,11 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     private final UserInfoService userInfoService;
-    private final PermissionService permissionService;
+
     private final PermissionRepository permissionRepository;
     private final RoleRepository roleRepository;
     private final MongoTemplate mongoTemplate;
+    private final PermissionService permissionService;
 
     @Override
     public void init() {

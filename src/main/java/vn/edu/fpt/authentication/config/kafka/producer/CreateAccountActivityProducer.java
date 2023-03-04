@@ -24,7 +24,7 @@ import java.util.UUID;
 @Slf4j
 public class CreateAccountActivityProducer extends Producer{
 
-    private static final String TOPIC = "flab.forum.account_activity";
+    private static final String TOPIC = "create_account_horo";
     private final ObjectMapper objectMapper;
 
     @Autowired
