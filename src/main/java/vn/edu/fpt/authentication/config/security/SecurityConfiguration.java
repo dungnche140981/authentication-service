@@ -82,7 +82,7 @@ public class SecurityConfiguration {
     public WebSecurityCustomizer webSecurityCustomizer(){
         return (web) -> web
                 .ignoring()
-                .antMatchers("/"+applicationContext+"/actuator/health")
+                .antMatchers("/actuator/health")
                 .antMatchers(HttpMethod.POST,"/"+applicationContext+"/public/api/v1/accounts/account")
                 .antMatchers(HttpMethod.POST, "/"+applicationContext+"/public/api/v1/accounts/account/login")
                 .antMatchers(HttpMethod.POST,"/"+applicationContext+"/public/api/v1/accounts/token/refresh")
